@@ -41,7 +41,7 @@ pip (Python package manager)
 
 Git (for version control)
 
-Installation & Setup
+## Installation & Setup
 1. Clone the Repository
 bash
 git clone https://github.com/kevinkiplangat432/phase-4-week-1-code-challenge.git
@@ -49,10 +49,10 @@ git clone https://github.com/kevinkiplangat432/phase-4-week-1-code-challenge.git
 cd superheroes-api
 2. Create Virtual Environment
 bash
-# Create virtual environment
+### Create virtual environment
 pipenv install
 
-# Activate virtual environment
+### Activate virtual environment
 pipenv shell
 
 3. Install Dependencies
@@ -61,29 +61,17 @@ pip install -r requirements.txt
 
 4. Initialize Database
 bash
-# Seed the database with initial data
+### Seed the database with initial data
 python seed.py
 
 5. Run the Application
 bash
-# Development server
+### Development server
 python run.py
 
-# The API will be available at: http://localhost:5555
-API Endpoints
-Base URL
-text
-http://localhost:5555
-Endpoints Summary
-Method	Endpoint	Description	Required Body
-GET	/	API welcome and endpoints list	None
-GET	/heroes	Get all heroes	None
-GET	/heroes/<id>	Get specific hero with powers	None
-GET	/powers	Get all powers	None
-GET	/powers/<id>	Get specific power	None
-PATCH	/powers/<id>	Update power description	{"description": "string"}
-POST	/hero_powers	Create hero-power association	{"strength": "string", "power_id": int, "hero_id": int}
-Detailed Endpoint Documentation
+### The API will be available at: http://localhost:5555
+
+Endpoint
 1. GET /
 Returns API welcome message and available endpoints.
 
@@ -306,21 +294,21 @@ strength: Must be one of: 'Strong', 'Weak', 'Average'
 Testing the API
 Using cURL
 bash
-# Get all heroes
+### Get all heroes
 curl http://localhost:5555/heroes
 
-# Get hero with ID 1
+### Get hero with ID 1
 curl http://localhost:5555/heroes/1
 
-# Get all powers
+### Get all powers
 curl http://localhost:5555/powers
 
-# Update power description
+### Update power description
 curl -X PATCH http://localhost:5555/powers/1 \
   -H "Content-Type: application/json" \
   -d '{"description": "Updated description with more than 20 characters"}'
 
-# Create hero-power association
+### Create hero-power association
 curl -X POST http://localhost:5555/hero_powers \
   -H "Content-Type: application/json" \
   -d '{"strength": "Average", "power_id": 1, "hero_id": 3}'
@@ -336,23 +324,7 @@ Run the test script:
 
 bash
 python test_api.py
-Project Structure
-text
-superheroes-api/
-├── app/
-│   ├── __init__.py          # Flask application factory
-│   ├── models.py            # Database models (Hero, Power, HeroPower)
-│   └── routes.py            # API route definitions
-├── migrations/              # Database migrations (if using Flask-Migrate)
-├── tests/                   # Test files
-├── requirements.txt         # Python dependencies
-├── .env                     # Environment variables
-├── .gitignore              # Git ignore file
-├── README.md               # This file
-├── run.py                  # Application runner
-├── seed.py                 # Database seeder
-├── setup.py                # Setup utility
-└── superheroes.db          # SQLite database (created after seeding)
+
 Database Operations
 Seeding the Database
 bash
@@ -367,10 +339,10 @@ Random associations between heroes and powers
 
 Resetting the Database
 bash
-# Delete the database file
+### Delete the database file
 rm superheroes.db
 
-# Recreate and seed
+### Recreate and seed
 python seed.py
 Development
 Adding New Features
@@ -388,9 +360,9 @@ Create a Pull Request
 
 Running Tests
 bash
-# Run the test suite
+### Run the test suite
 python -m pytest tests/
-Code Style
+## Code Style used and suggested for use in future.
 Follow PEP 8 guidelines
 
 Use meaningful variable names
@@ -399,7 +371,7 @@ Add docstrings for functions and classes
 
 Keep functions focused and single-purpose
 
-Deployment
+## Deployment
 Local Deployment
 Follow installation steps above
 
@@ -424,32 +396,32 @@ Common Issues
 "No such table" error
 
 bash
-# Delete and recreate the database
+### Delete and recreate the database
 rm superheroes.db
 python seed.py
 Port already in use
 
 python
-# In run.py, change the port
+### In run.py, change the port
 app.run(debug=True, port=5000)  # or any other available port
 Import errors
 
 bash
-# Make sure you're in the correct directory
+### Make sure you're in the correct directory
 cd superheroes-api
 
-# Ensure virtual environment is activated
+### Ensure virtual environment is activated
 source venv/bin/activate
 
-# Check if dependencies are installed
+### Check if dependencies are installed
 pip list | grep Flask
 Database connection issues
 
 bash
-# Check if database file exists
+### Check if database file exists
 ls -la superheroes.db
 
-# Check file permissions
+### Check file permissions
 chmod 644 superheroes.db
 Debug Mode
 To enable debug mode, set FLASK_ENV=development in your .env file or run:
