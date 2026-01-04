@@ -71,226 +71,6 @@ python run.py
 
 ### The API will be available at: http://localhost:5555
 
-Endpoint
-1. GET /
-Returns API welcome message and available endpoints.
-
-Response:
-
-json
-{
-  "message": "Welcome to Superheroes API",
-  "endpoints": {
-    "GET /heroes": "List all heroes",
-    "GET /heroes/<id>": "Get hero details with powers",
-    "GET /powers": "List all powers",
-    "GET /powers/<id>": "Get power details",
-    "PATCH /powers/<id>": "Update power description",
-    "POST /hero_powers": "Create hero-power association"
-  }
-}
-2. GET /heroes
-Returns a list of all heroes.
-
-Response:
-
-json
-[
-  {
-    "id": 1,
-    "name": "Kamala Khan",
-    "super_name": "Ms. Marvel"
-  },
-  {
-    "id": 2,
-    "name": "Doreen Green",
-    "super_name": "Squirrel Girl"
-  },
-  ...
-]
-3. GET /heroes/<id>
-Returns details of a specific hero including their powers.
-
-Parameters:
-
-id (integer): Hero ID
-
-Success Response (200):
-
-json
-{
-  "id": 1,
-  "name": "Kamala Khan",
-  "super_name": "Ms. Marvel",
-  "hero_powers": [
-    {
-      "hero_id": 1,
-      "id": 1,
-      "power": {
-        "description": "gives the wielder super-human strengths",
-        "id": 1,
-        "name": "super strength"
-      },
-      "power_id": 1,
-      "strength": "Strong"
-    }
-  ]
-}
-Error Response (404):
-
-json
-{
-  "error": "Hero not found"
-}
-4. GET /powers
-Returns a list of all powers.
-
-Response:
-
-json
-[
-  {
-    "description": "gives the wielder super-human strengths",
-    "id": 1,
-    "name": "super strength"
-  },
-  {
-    "description": "gives the wielder the ability to fly through the skies at supersonic speed",
-    "id": 2,
-    "name": "flight"
-  },
-  ...
-]
-5. GET /powers/<id>
-Returns details of a specific power.
-
-Parameters:
-
-id (integer): Power ID
-
-Success Response (200):
-
-json
-{
-  "description": "gives the wielder super-human strengths",
-  "id": 1,
-  "name": "super strength"
-}
-Error Response (404):
-
-json
-{
-  "error": "Power not found"
-}
-6. PATCH /powers/<id>
-Updates the description of a specific power.
-
-Parameters:
-
-id (integer): Power ID
-
-Request Body:
-
-json
-{
-  "description": "Updated description with at least 20 characters"
-}
-Success Response (200):
-
-json
-{
-  "description": "Updated description with at least 20 characters",
-  "id": 1,
-  "name": "super strength"
-}
-Error Responses:
-
-404 - Power not found:
-
-json
-{
-  "error": "Power not found"
-}
-400 - Validation error:
-
-json
-{
-  "errors": ["Description must be at least 20 characters long"]
-}
-7. POST /hero_powers
-Creates a new association between a hero and a power.
-
-Request Body:
-
-json
-{
-  "strength": "Average",
-  "power_id": 1,
-  "hero_id": 3
-}
-Success Response (201):
-
-json
-{
-  "id": 11,
-  "hero_id": 3,
-  "power_id": 1,
-  "strength": "Average",
-  "hero": {
-    "id": 3,
-    "name": "Gwen Stacy",
-    "super_name": "Spider-Gwen"
-  },
-  "power": {
-    "description": "gives the wielder super-human strengths",
-    "id": 1,
-    "name": "super strength"
-  }
-}
-Error Responses:
-
-400 - Validation error:
-
-json
-{
-  "errors": ["Strength must be one of: Strong, Weak, Average"]
-}
-404 - Hero/Power not found:
-
-json
-{
-  "errors": ["Hero not found"]
-}
-Data Models
-Hero
-python
-{
-  "id": Integer (Primary Key),
-  "name": String (Required),
-  "super_name": String (Required)
-}
-Power
-python
-{
-  "id": Integer (Primary Key),
-  "name": String (Required),
-  "description": String (Required, Minimum 20 characters)
-}
-HeroPower
-python
-{
-  "id": Integer (Primary Key),
-  "strength": String (Required, Must be: 'Strong', 'Weak', or 'Average'),
-  "hero_id": Integer (Foreign Key to Hero, Cascade Delete),
-  "power_id": Integer (Foreign Key to Power, Cascade Delete)
-}
-Validation Rules
-Power Model
-description: Must be present and at least 20 characters long
-
-HeroPower Model
-strength: Must be one of: 'Strong', 'Weak', 'Average'
-
 Testing the API
 Using cURL
 bash
@@ -428,29 +208,8 @@ To enable debug mode, set FLASK_ENV=development in your .env file or run:
 
 bash
 FLASK_ENV=development python run.py
-API Examples
-Example Workflow
-Get all heroes:
 
-bash
-curl http://localhost:5555/heroes
-View a specific hero's powers:
-
-bash
-curl http://localhost:5555/heroes/1
-Update a power's description:
-
-bash
-curl -X PATCH http://localhost:5555/powers/1 \
-  -H "Content-Type: application/json" \
-  -d '{"description": "Enhanced description with more than twenty characters for validation"}'
-Assign a new power to a hero:
-
-bash
-curl -X POST http://localhost:5555/hero_powers \
-  -H "Content-Type: application/json" \
-  -d '{"strength": "Strong", "power_id": 2, "hero_id": 5}'
-Contributing
+## Contributing
 Fork the repository
 
 Create a feature branch
@@ -461,17 +220,17 @@ Push to the branch
 
 Open a Pull Request
 
-License
+## License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-Acknowledgments
+## Acknowledgments
 Flask documentation and community
 
 SQLAlchemy ORM
 
 All contributors and testers
 
-Support
+## Support
 For support, please:
 
 Check the troubleshooting section above
@@ -480,7 +239,7 @@ Review the API documentation
 
 Create an issue in the GitHub repository
 
-Contact
-Project Maintainer: [Your Name]
-Email: [your.email@example.com]
-GitHub: https://github.com/YOUR_USERNAME
+## Contact
+Project Maintainer: Kevin kiplangat
+Email: kiplangatkevin335@gmail.com
+GitHub: https://github.com/kevinkiplangat432
