@@ -1,22 +1,29 @@
-Superheroes API
+# Superheroes API
 A Flask REST API for tracking superheroes and their superpowers. This API allows you to manage superheroes, their powers, and associations between them with full CRUD operations, validation, and error handling.
 
-Features
-Hero Management: Track superheroes with their secret and public identities
+## Features
+##### Hero Management
+    Track superheroes with their secret and public identities
 
-Power Management: Manage superpowers with detailed descriptions
+##### Power Management 
+    Manage superpowers with detailed descriptions
 
-Hero-Power Associations: Link heroes to powers with customizable strength levels
+##### Hero-Power Associations 
+    Link heroes to powers with customizable strength levels
 
-Full CRUD Operations: Create, read, update, and delete functionality
+##### Full CRUD Operations 
+    Create, read, update, and delete functionality
 
-Data Validation: Comprehensive validation for all inputs
+##### Data Validation
+    Comprehensive validation for all inputs
 
-Error Handling: Proper HTTP status codes and error messages
+##### Error Handling 
+    Proper HTTP status codes and error messages
 
-RESTful Design: Clean, predictable API endpoints
+##### RESTful Design 
+    Clean, predictable API endpoints
 
-Tech Stack
+## Tech Stack
 Backend: Python, Flask
 
 Database: SQLite (with SQLAlchemy ORM)
@@ -37,26 +44,26 @@ Git (for version control)
 Installation & Setup
 1. Clone the Repository
 bash
-git clone https://github.com/YOUR_USERNAME/superheroes-api.git
+git clone https://github.com/kevinkiplangat432/phase-4-week-1-code-challenge.git
+
 cd superheroes-api
 2. Create Virtual Environment
 bash
 # Create virtual environment
-python -m venv venv
+pipenv install
 
 # Activate virtual environment
-# On macOS/Linux:
-source venv/bin/activate
+pipenv shell
 
-# On Windows:
-venv\Scripts\activate
 3. Install Dependencies
 bash
 pip install -r requirements.txt
+
 4. Initialize Database
 bash
 # Seed the database with initial data
 python seed.py
+
 5. Run the Application
 bash
 # Development server
