@@ -4,6 +4,17 @@ from app.models import Hero, Power, HeroPower
 
 bp = Blueprint('api', __name__)
 
+@bp.route('/')
+def index():
+    return jsonify({
+        "message": "Welcome to Superheroes API",
+        "endpoints": {
+            "heroes": "/heroes",
+            "powers": "/powers",
+            "hero_powers": "/hero_powers"
+        }
+    })
+
 @bp.route('/heroes', methods=['GET'])
 def get_heroes():
     heroes = Hero.query.all()
