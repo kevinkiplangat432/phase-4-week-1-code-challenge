@@ -11,7 +11,7 @@ if __name__ == '__main__':
         db.create_all()
         
         print("Clearing db...")
-        # Clear existing data in the correct order (due to foreign key constraints)
+        # Clear existing data in the correct order due to foreign key constraints
         HeroPower.query.delete()
         Power.query.delete()
         Hero.query.delete()
