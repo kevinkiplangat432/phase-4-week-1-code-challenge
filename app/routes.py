@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 from app import db
 from app.models import Hero, Power, HeroPower
 
-bp = Blueprint('api', __name__, url_prefix='/api')
+bp = Blueprint('api', __name__)
 
 @bp.route('/heroes', methods=['GET'])
 def get_heroes():
@@ -15,7 +15,7 @@ def get_hero(id):
     if not hero:
         return jsonify({'error': 'Hero not found'}), 404
     
-    return jsonify(hero.to_dict(include_powers=True))
+    return jsonify(hero.to_dict_with_powers())
 
 @bp.route('/powers', methods=['GET'])
 def get_powers():
@@ -41,12 +41,20 @@ def update_power(id):
         return jsonify({'errors': ['Description is required']}), 400
     
     try:
-        power.description = data['description']
+        # Validate description length
+        description = data['description']
+        if not description or len(description) < 20:
+            return jsonify({'errors': ['Description must be at least 20 characters long']}), 400
+        
+        power.description = description
         db.session.commit()
         return jsonify(power.to_dict())
-    except Exception as e:
+    except ValueError as e:
         db.session.rollback()
         return jsonify({'errors': [str(e)]}), 400
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'errors': ['An error occurred while updating the power']}), 400
 
 @bp.route('/hero_powers', methods=['POST'])
 def create_hero_power():
@@ -80,15 +88,9 @@ def create_hero_power():
         db.session.commit()
         
         return jsonify(hero_power.to_dict()), 201
-    except Exception as e:
+    except ValueError as e:
         db.session.rollback()
         return jsonify({'errors': [str(e)]}), 400
-
-# Error handlers
-@bp.app_errorhandler(404)
-def not_found(error):
-    return jsonify({'error': 'Not found'}), 404
-
-@bp.app_errorhandler(500)
-def internal_error(error):
-    return jsonify({'error': 'Internal server error'}), 500
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'errors': ['An error occurred while creating the hero power']}), 400

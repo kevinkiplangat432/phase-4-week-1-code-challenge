@@ -12,16 +12,17 @@ class Hero(db.Model):
     hero_powers = db.relationship('HeroPower', back_populates='hero', cascade='all, delete-orphan')
     powers = db.relationship('Power', secondary='hero_powers', back_populates='heroes', viewonly=True)
     
-    def to_dict(self, include_powers=False):
+    def to_dict(self):
         hero_dict = {
             'id': self.id,
             'name': self.name,
             'super_name': self.super_name
         }
-        
-        if include_powers:
-            hero_dict['hero_powers'] = [hp.to_dict() for hp in self.hero_powers]
-        
+        return hero_dict
+    
+    def to_dict_with_powers(self):
+        hero_dict = self.to_dict()
+        hero_dict['hero_powers'] = [hp.to_dict() for hp in self.hero_powers]
         return hero_dict
 
 class Power(db.Model):
