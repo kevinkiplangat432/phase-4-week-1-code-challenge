@@ -43,56 +43,55 @@ def run_all_tests():
     print("Testing Superheroes API")
     print("=" * 60)
     
-    # 1. GET /heroes
+    # GET /heroes
     test_endpoint("/heroes")
     
-    # 2. GET /heroes/:id (existing)
+    # GET /heroes/:id (existing)
     test_endpoint("/heroes/1")
     
-    # 3. GET /heroes/:id (non-existing)
+    # GET /heroes/:id (non-existing)
     test_endpoint("/heroes/999", expected_status=404)
     
-    # 4. GET /powers
+    # GET /powers
     test_endpoint("/powers")
     
-    # 5. GET /powers/:id (existing)
+    # GET /powers/:id (existing)
     test_endpoint("/powers/1")
     
-    # 6. GET /powers/:id (non-existing)
+    # GET /powers/:id (non-existing)
     test_endpoint("/powers/999", expected_status=404)
     
-    # 7. PATCH /powers/:id (valid)
+    # PATCH /powers/:id (valid)
     test_endpoint("/powers/1", "PATCH", 
                  {"description": "Updated description with more than twenty characters"},
                  expected_status=200)
     
-    # 8. PATCH /powers/:id (invalid - too short)
+    # PATCH /powers/:id (invalid - too short)
     test_endpoint("/powers/1", "PATCH",
                  {"description": "Too short"},
                  expected_status=400)
     
-    # 9. PATCH /powers/:id (non-existing)
+    # PATCH /powers/:id (non-existing)
     test_endpoint("/powers/999", "PATCH",
                  {"description": "Valid description with enough characters"},
                  expected_status=404)
     
-    # 10. POST /hero_powers (valid)
+    # POST /hero_powers (valid)
     test_endpoint("/hero_powers", "POST",
                  {"strength": "Average", "power_id": 1, "hero_id": 3},
                  expected_status=201)
     
-    # 11. POST /hero_powers (invalid strength)
+    # POST /hero_powers (invalid strength)
     test_endpoint("/hero_powers", "POST",
                  {"strength": "Invalid", "power_id": 1, "hero_id": 3},
                  expected_status=400)
     
-    # 12. POST /hero_powers (non-existing hero)
+    # POST /hero_powers (non-existing hero)
     test_endpoint("/hero_powers", "POST",
                  {"strength": "Average", "power_id": 1, "hero_id": 999},
                  expected_status=404)
 
 if __name__ == "__main__":
-    # First, make sure app is running
     print("Make sure Flask app is running on port 5555!")
     print("Run: python run.py")
     input("Press Enter when ready...")
